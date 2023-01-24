@@ -43,3 +43,6 @@ google-services.json
 
 # Android Profiling
 *.hprof
+gradlew.bat
+gradlew
+gradle/wrapper/gradle-wrapper.jar
