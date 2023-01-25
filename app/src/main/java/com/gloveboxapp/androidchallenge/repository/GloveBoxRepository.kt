@@ -12,6 +12,7 @@ interface GloveBoxRepository {
 
     val policies: ArrayList<Policy>
     val policyTypes: ArrayList<PolicyType>
+    val gson: Gson
 
     // Function to parse policies.json
     fun parsePolicies()
@@ -26,25 +27,38 @@ class GloveBoxRepositoryImpl(
     private val context: Context
     )
     : GloveBoxRepository {
-    override val policies: ArrayList<Policy> = ArrayList()
-    override val policyTypes: ArrayList<PolicyType> = ArrayList()
+    override var policies: ArrayList<Policy> = ArrayList()
+    override var policyTypes: ArrayList<PolicyType> = ArrayList()
+    override val gson = Gson()
 
     override fun parsePolicies() {
-        TODO("Not yet implemented")
+        val policiesString = getJsonString("policies.json")
+        policiesString?.let { Log.i("data", it) }
+
+        if (!policiesString.isNullOrEmpty()) {
+            val listPolicies = object: TypeToken<List<Policy>>(){}.type
+
+            policies = gson.fromJson(policiesString, listPolicies)
+            policies.forEachIndexed {
+                    index, policy ->  Log.i("data", ">Item $index:\n$policy")}
+        }
     }
 
     override fun parsePolicyTypes() {
-        TODO("Not yet implemented")
         val policyTypeString = getJsonString("policy_types.json")
         policyTypeString?.let { Log.i("data", it) }
 
         if (!policyTypeString.isNullOrEmpty()) {
-            val gson = Gson()
             val listPolicyType = object : TypeToken<List<PolicyType>>(){}.type
 
-            policies = gson.fromJson(policyTypeString, listPolicyType)
+            policyTypes = gson.fromJson(policyTypeString, listPolicyType)
+            policyTypes.forEachIndexed {
+                    index, policyType -> Log.i("data", "> Item $index:\n$policyType")
+
+            }
         }
     }
+
 
     override fun getJsonString(fileName: String): String? {
         val jsonString: String
