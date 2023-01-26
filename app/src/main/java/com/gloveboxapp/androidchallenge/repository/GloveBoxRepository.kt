@@ -1,7 +1,6 @@
 package com.gloveboxapp.androidchallenge.repository
 
 import android.content.Context
-import android.util.Log
 import com.gloveboxapp.androidchallenge.data.Policy
 import com.gloveboxapp.androidchallenge.data.PolicyType
 import com.google.gson.*
@@ -10,8 +9,8 @@ import java.io.IOException
 
 interface GloveBoxRepository {
 
-    val policies: ArrayList<Policy>
     val policyTypes: ArrayList<PolicyType>
+    val policies: HashMap<String, List<Policy>>
     val gson: Gson
 
     // Function to parse policies.json
@@ -21,41 +20,43 @@ interface GloveBoxRepository {
     fun getPolicyTypes()
 
     fun getJsonString(fileName: String) : String?
+
 }
 
 class GloveBoxRepositoryImpl(
     private val context: Context
-    )
-    : GloveBoxRepository {
-    override var policies: ArrayList<Policy> = ArrayList()
+) : GloveBoxRepository {
     override var policyTypes: ArrayList<PolicyType> = ArrayList()
+    override val policies: HashMap<String, List<Policy>> = HashMap()
     override val gson = Gson()
+
+    init {
+        getPolicies()
+        getPolicyTypes()
+    }
 
     override fun getPolicies() {
         val policiesString = getJsonString("policies.json")
-        policiesString?.let { Log.i("data", it) }
+        var policyList = ArrayList<Policy>()
 
         if (!policiesString.isNullOrEmpty()) {
-            val listPolicies = object: TypeToken<List<Policy>>(){}.type
+            val policyListType = object: TypeToken<List<Policy>>(){}.type
+            policyList = gson.fromJson(policiesString, policyListType)
+        }
 
-            policies = gson.fromJson(policiesString, listPolicies)
-            policies.forEachIndexed {
-                    index, policy ->  Log.i("data", ">Item $index:\n$policy")}
+        for (p in policyList) {
+            var carrierPolicyList = policies.getOrDefault(p.carrierID, emptyList())
+            carrierPolicyList+=p
+            policies[p.carrierID] = carrierPolicyList
         }
     }
 
     override fun getPolicyTypes() {
         val policyTypeString = getJsonString("policy_types.json")
-        policyTypeString?.let { Log.i("data", it) }
 
         if (!policyTypeString.isNullOrEmpty()) {
             val listPolicyType = object : TypeToken<List<PolicyType>>(){}.type
-
             policyTypes = gson.fromJson(policyTypeString, listPolicyType)
-            policyTypes.forEachIndexed {
-                    index, policyType -> Log.i("data", "> Item $index:\n$policyType")
-
-            }
         }
     }
 
@@ -74,5 +75,4 @@ class GloveBoxRepositoryImpl(
         }
         return jsonString
     }
-
 }

@@ -16,14 +16,20 @@ class HomeInnerAdapter(
         private val policyTypeText: TextView = view.findViewById(R.id.policyTypeText)
         private val policyHolderText: TextView = view.findViewById(R.id.policyHolderName)
         private val agencyNameText: TextView = view.findViewById(R.id.agencyNameText)
+        private val policyNumberText: TextView = view.findViewById(R.id.policyNumberText)
 
         fun bind(policy: Policy) {
             policyTypeText.text = policy.type.name
             agencyNameText.text = policy.agencyName
+            policyNumberText.text = policy.policyNumber
 
             val nameBuilder = StringBuilder()
             nameBuilder.append(policy.primaryHolder.firstName)
-            if (policy.primaryHolder.middleName != null) nameBuilder.append(policy.primaryHolder.middleName)
+            nameBuilder.append(" ")
+            if (policy.primaryHolder.middleName != null) {
+                nameBuilder.append(policy.primaryHolder.middleName)
+                nameBuilder.append(" ")
+            }
             nameBuilder.append(policy.primaryHolder.lastName)
             policyHolderText.text = nameBuilder.toString()
         }
