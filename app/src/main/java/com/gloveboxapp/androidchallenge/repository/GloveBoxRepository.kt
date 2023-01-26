@@ -15,10 +15,10 @@ interface GloveBoxRepository {
     val gson: Gson
 
     // Function to parse policies.json
-    fun parsePolicies()
+    fun getPolicies()
 
     // Function to parse policy_types.json
-    fun parsePolicyTypes()
+    fun getPolicyTypes()
 
     fun getJsonString(fileName: String) : String?
 }
@@ -31,7 +31,7 @@ class GloveBoxRepositoryImpl(
     override var policyTypes: ArrayList<PolicyType> = ArrayList()
     override val gson = Gson()
 
-    override fun parsePolicies() {
+    override fun getPolicies() {
         val policiesString = getJsonString("policies.json")
         policiesString?.let { Log.i("data", it) }
 
@@ -44,7 +44,7 @@ class GloveBoxRepositoryImpl(
         }
     }
 
-    override fun parsePolicyTypes() {
+    override fun getPolicyTypes() {
         val policyTypeString = getJsonString("policy_types.json")
         policyTypeString?.let { Log.i("data", it) }
 

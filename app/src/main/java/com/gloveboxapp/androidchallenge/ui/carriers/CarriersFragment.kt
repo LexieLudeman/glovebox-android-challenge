@@ -8,6 +8,11 @@ import androidx.fragment.app.Fragment
 import com.gloveboxapp.androidchallenge.databinding.FragmentCarriersBinding
 
 class CarriersFragment : Fragment() {
+/*
+To do:
+    Group the records in the policies array by carrierID and render one list for each carrier
+    with each list containing the policies associated with that carrier
+*/
 
     private var _binding: FragmentCarriersBinding? = null
 

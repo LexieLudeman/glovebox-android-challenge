@@ -8,12 +8,12 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.gloveboxapp.androidchallenge.databinding.ActivityMainBinding
-import com.gloveboxapp.androidchallenge.repository.GloveBoxRepository
 import com.gloveboxapp.androidchallenge.repository.GloveBoxRepositoryImpl
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var repository: GloveBoxRepositoryImpl
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +34,8 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        val repository = GloveBoxRepositoryImpl(this)
-        repository.parsePolicyTypes()
-        repository.parsePolicies()
+        repository = GloveBoxRepositoryImpl(this)
+        repository.getPolicyTypes()
+        repository.getPolicies()
     }
 }

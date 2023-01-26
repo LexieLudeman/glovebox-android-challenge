@@ -3,4 +3,9 @@
     <string name="title_home">Home</string>
     <string name="title_carriers">Carriers</string>
     <string name="title_account">Account</string>
+    <string name="agency_text_view">Agency</string>
+    <string name="carrier_id_text_view">Carrier ID</string>
+    <string name="policy_type_textview">Policy Type</string>
+    <string name="policy_holder_text_view">First Middle Last</string>
+    <string name="policy_number_text_view">Policy #</string>
 </resources>

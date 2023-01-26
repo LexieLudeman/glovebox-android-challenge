@@ -9,6 +9,11 @@ import com.gloveboxapp.androidchallenge.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
 
+/*
+To do:
+    Load the policies into a recyclerview that is retrieved by the HomeViewModel
+*/
+
     private var _binding: FragmentHomeBinding? = null
 
     // This property is only valid between onCreateView and
