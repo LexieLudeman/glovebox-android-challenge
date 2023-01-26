@@ -5,11 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gloveboxapp.androidchallenge.R
 import com.gloveboxapp.androidchallenge.databinding.FragmentHomeBinding
 import com.gloveboxapp.androidchallenge.repository.GloveBoxRepositoryImpl
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 
 class HomeFragment : Fragment() {
 
@@ -54,7 +57,9 @@ To do:
             outerRecyclerView.adapter = homeAdapter
         }
 
-        homeViewModel.policies.observe(viewLifecycleOwner) { policies ->
+        homeViewModel.store.stateFlow.map{
+            it.policies
+        }.distinctUntilChanged().asLiveData().observe(viewLifecycleOwner) { policies ->
             homeAdapter.updatePolicies(policies = policies)
         }
 
