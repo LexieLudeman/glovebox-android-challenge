@@ -12,10 +12,22 @@ import com.gloveboxapp.androidchallenge.data.Policy
 
 class HomeOuterAdapter(
     private val context: Context,
-    private var policiesMap: HashMap<String, ArrayList<Policy>>
+    private var policyList: List<Policy>
 ) : RecyclerView.Adapter<HomeOuterAdapter.HomeOuterViewHolder>(){
 
     private lateinit var innerAdapter: HomeInnerAdapter
+    private var policiesMap: HashMap<String, List<Policy>> = HashMap()
+
+    init {
+        createPolicyMap(policyList)
+    }
+    private fun createPolicyMap(list: List<Policy>){
+        for (p in list) {
+            var carrierPolicyList = policiesMap.getOrDefault(p.carrierID, emptyList())
+            carrierPolicyList+=p
+            policiesMap[p.carrierID] = carrierPolicyList
+        }
+    }
     inner class HomeOuterViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val carrierId: TextView = view.findViewById(R.id.carrierId)
         val innerRecyclerView: RecyclerView = view.findViewById(R.id.policiesRecyclerView)
@@ -42,8 +54,8 @@ class HomeOuterAdapter(
         }
     }
 
-    fun updatePolicies(policies: Map<String, List<Policy>>) {
-        policiesMap = policies as HashMap<String, ArrayList<Policy>>
+    fun updatePolicies(policies: List<Policy>) {
+        createPolicyMap(policies)
         notifyDataSetChanged()
     }
 

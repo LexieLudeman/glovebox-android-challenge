@@ -7,26 +7,33 @@ import androidx.lifecycle.viewModelScope
 import com.gloveboxapp.androidchallenge.data.Policy
 import com.gloveboxapp.androidchallenge.data.PolicyType
 import com.gloveboxapp.androidchallenge.repository.GloveBoxRepositoryImpl
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeViewModel (
+@HiltViewModel
+class HomeViewModel @Inject constructor(
     private val repository: GloveBoxRepositoryImpl
+//    ,
+//    val store: Store<ApplicationState>
 ): ViewModel() {
 
-/*
-To do:
-    Load the policies into a recyclerview that is retrieved by the HomeViewModel
-*/
-    private val _policies: MutableLiveData<Map<String, List<Policy>>> = MutableLiveData()
-    val policies: LiveData<Map<String,List<Policy>>> = _policies
+    private val _policies: MutableLiveData<List<Policy>> = MutableLiveData()
+    val policies: LiveData<List<Policy>> = _policies
 
     private val _policyTypes: MutableLiveData<List<PolicyType>> = MutableLiveData()
     val policyTypes: LiveData<List<PolicyType>> = _policyTypes
 
     fun getPoliciesFromRepo() {
         viewModelScope.launch {
-            val policies = repository.policies
-            _policies.value = policies
+            val policyList = repository.policies
+            _policies.value = policyList
+
+//            store.update { applicationState ->
+//                return@update applicationState.copy(
+//                    policies = policyList
+//                )
+//            }
         }
     }
 

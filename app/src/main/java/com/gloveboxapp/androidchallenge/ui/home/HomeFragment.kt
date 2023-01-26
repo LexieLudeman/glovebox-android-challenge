@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gloveboxapp.androidchallenge.R
-import com.gloveboxapp.androidchallenge.data.Policy
 import com.gloveboxapp.androidchallenge.databinding.FragmentHomeBinding
 import com.gloveboxapp.androidchallenge.repository.GloveBoxRepositoryImpl
 
@@ -46,7 +45,7 @@ To do:
 
         homeAdapter = HomeOuterAdapter(
             context = requireContext().applicationContext,
-            policiesMap = hashMapOf()
+            policyList = ArrayList()
         )
 
         if (_binding != null) {

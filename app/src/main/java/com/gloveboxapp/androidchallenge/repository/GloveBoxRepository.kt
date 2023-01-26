@@ -10,7 +10,7 @@ import java.io.IOException
 interface GloveBoxRepository {
 
     val policyTypes: ArrayList<PolicyType>
-    val policies: HashMap<String, List<Policy>>
+    val policies: ArrayList<Policy>
     val gson: Gson
 
     // Function to parse policies.json
@@ -27,7 +27,7 @@ class GloveBoxRepositoryImpl(
     private val context: Context
 ) : GloveBoxRepository {
     override var policyTypes: ArrayList<PolicyType> = ArrayList()
-    override val policies: HashMap<String, List<Policy>> = HashMap()
+    override var policies: ArrayList<Policy> = ArrayList()
     override val gson = Gson()
 
     init {
@@ -37,18 +37,12 @@ class GloveBoxRepositoryImpl(
 
     override fun getPolicies() {
         val policiesString = getJsonString("policies.json")
-        var policyList = ArrayList<Policy>()
 
         if (!policiesString.isNullOrEmpty()) {
             val policyListType = object: TypeToken<List<Policy>>(){}.type
-            policyList = gson.fromJson(policiesString, policyListType)
+            policies = gson.fromJson(policiesString, policyListType)
         }
 
-        for (p in policyList) {
-            var carrierPolicyList = policies.getOrDefault(p.carrierID, emptyList())
-            carrierPolicyList+=p
-            policies[p.carrierID] = carrierPolicyList
-        }
     }
 
     override fun getPolicyTypes() {
@@ -75,4 +69,5 @@ class GloveBoxRepositoryImpl(
         }
         return jsonString
     }
+
 }

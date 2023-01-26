@@ -9,7 +9,7 @@ import com.gloveboxapp.androidchallenge.R
 import com.gloveboxapp.androidchallenge.data.Policy
 
 class HomeInnerAdapter(
-    private var policiesList: ArrayList<Policy>
+    private var policiesList: List<Policy>
 ) : RecyclerView.Adapter<HomeInnerAdapter.HomeInnerViewHolder>(){
 
     inner class HomeInnerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
