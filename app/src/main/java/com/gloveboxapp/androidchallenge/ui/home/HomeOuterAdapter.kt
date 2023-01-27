@@ -12,7 +12,7 @@ import com.gloveboxapp.androidchallenge.data.Policy
 
 class HomeOuterAdapter(
     private val context: Context,
-    private var policyList: List<Policy>
+    policyList: List<Policy>
 ) : RecyclerView.Adapter<HomeOuterAdapter.HomeOuterViewHolder>(){
 
     private lateinit var innerAdapter: HomeInnerAdapter
@@ -56,7 +56,7 @@ class HomeOuterAdapter(
 
     fun updatePolicies(policies: List<Policy>) {
         createPolicyMap(policies)
-        notifyDataSetChanged()
+//        notifyDataSetChanged()
     }
 
 }

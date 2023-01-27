@@ -5,7 +5,10 @@ import com.gloveboxapp.androidchallenge.data.Policy
 import com.gloveboxapp.androidchallenge.data.PolicyType
 import com.google.gson.*
 import com.google.gson.reflect.TypeToken
+import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.IOException
+import javax.inject.Inject
+import javax.inject.Singleton
 
 interface GloveBoxRepository {
 
@@ -23,8 +26,9 @@ interface GloveBoxRepository {
 
 }
 
-class GloveBoxRepositoryImpl(
-    private val context: Context
+@Singleton
+class GloveBoxRepositoryImpl @Inject constructor(
+    @ApplicationContext private val context: Context
 ) : GloveBoxRepository {
     override var policyTypes: ArrayList<PolicyType> = ArrayList()
     override var policies: ArrayList<Policy> = ArrayList()

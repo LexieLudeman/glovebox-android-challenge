@@ -5,25 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gloveboxapp.androidchallenge.R
 import com.gloveboxapp.androidchallenge.databinding.FragmentHomeBinding
-import com.gloveboxapp.androidchallenge.repository.GloveBoxRepositoryImpl
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-/*
-To do:
-    Load the policies into a recyclerview that is retrieved by the HomeViewModel
-*/
-
     private lateinit var homeAdapter: HomeOuterAdapter
-    private lateinit var homeViewModel: HomeViewModel
     private lateinit var outerRecyclerView: RecyclerView
+
+    private val homeViewModel: HomeViewModel by lazy {
+        ViewModelProvider(this)[HomeViewModel::class.java]
+    }
 
     private var _binding: FragmentHomeBinding? = null
 
@@ -38,13 +38,6 @@ To do:
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-
-        homeViewModel =
-            HomeViewModel(
-                repository = GloveBoxRepositoryImpl(
-                    context = requireContext().applicationContext
-                )
-            )
 
         homeAdapter = HomeOuterAdapter(
             context = requireContext().applicationContext,
