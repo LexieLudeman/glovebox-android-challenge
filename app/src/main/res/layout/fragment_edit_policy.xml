@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/carrier_label"
-        android:text="Carrier:"
+        android:text="@string/carrier_label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
@@ -27,24 +27,40 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/policy_holder_label"
-        android:text="Policy Holder:"
+        android:id="@+id/agency_label"
+        android:text="@string/agency_label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/carrier_label"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/policy_holder"
-        android:text="@string/policy_holder_text_view"
+        android:id="@+id/agency"
+        android:text="@string/agency_text"
         app:layout_constraintStart_toStartOf="@id/carrier_text"
         app:layout_constraintTop_toBottomOf="@id/carrier_label"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/policy_holder_label"
+        android:text="@string/policy_holder_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/agency_label"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/policy_holder"
+        android:text="@string/policy_holder_text_view"
+        app:layout_constraintStart_toStartOf="@id/agency"
+        app:layout_constraintTop_toBottomOf="@id/agency_label"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/policy_number_label"
-        android:text="Policy:"
+        android:text="@string/policy_number_label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/policy_holder_label"/>
 

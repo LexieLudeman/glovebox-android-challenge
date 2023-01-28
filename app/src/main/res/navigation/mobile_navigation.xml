@@ -30,7 +30,8 @@
     <fragment
         android:id="@+id/editPolicyFragment"
         android:name="com.gloveboxapp.androidchallenge.ui.editpolicy.EditPolicyFragment"
-        android:label="EditPolicyFragment" >
+        android:label="EditPolicyFragment"
+        tools:layout="@layout/fragment_edit_policy">
         <action
             android:id="@+id/action_editPolicyFragment_pop"
             app:popUpTo="@id/editPolicyFragment"

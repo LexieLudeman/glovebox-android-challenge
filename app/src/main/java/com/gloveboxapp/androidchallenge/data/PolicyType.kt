@@ -5,6 +5,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class PolicyType(
-    var id: String,
-    var name: String
+    var id: String? = null,
+    var name: String? = null
 ) : Parcelable

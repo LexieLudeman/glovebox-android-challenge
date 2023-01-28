@@ -12,4 +12,9 @@
     <string name="carrier_name">carrier name</string>
     <string name="policy_type_label">Policy Type:</string>
     <string name="spinner_content">Drop down menu for changing policy type</string>
+    <string name="agency_label">Agency:</string>
+    <string name="agency_text">Agency</string>
+    <string name="policy_holder_label">Policy Holder:</string>
+    <string name="policy_number_label">Policy:</string>
+    <string name="carrier_label">Carrier:</string>
 </resources>

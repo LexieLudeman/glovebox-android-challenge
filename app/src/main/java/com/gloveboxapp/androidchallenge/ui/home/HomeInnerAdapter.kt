@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.gloveboxapp.androidchallenge.R
 import com.gloveboxapp.androidchallenge.data.Policy
@@ -23,7 +24,7 @@ class HomeInnerAdapter(
         fun bind(policy: Policy) {
             if (policy.type.id == "auto") policyTypeText.text = "Auto"
             else policyTypeText.text = policy.type.name
-            policyNumberText.text = policy.agencyName
+            policyNumberText.text = policy.policyNumber
 
             val nameBuilder = StringBuilder()
             nameBuilder.append(policy.primaryHolder.firstName)
@@ -37,7 +38,8 @@ class HomeInnerAdapter(
 
             editButton.setOnClickListener {
                 Log.d("Buttons", policy.policyNumber + " pressed")
-
+                val editPolicy = HomeFragmentDirections.actionNavigationHomeToEditPolicyFragment(policy)
+                it.findNavController().navigate(editPolicy)
             }
         }
     }

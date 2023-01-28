@@ -2,6 +2,7 @@ package com.gloveboxapp.androidchallenge.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gloveboxapp.androidchallenge.R
 import com.gloveboxapp.androidchallenge.databinding.FragmentHomeBinding
+import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
@@ -38,7 +40,11 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         homeAdapter = HomeOuterAdapter(
             context = requireContext().applicationContext,
             policyList = ArrayList()
@@ -57,8 +63,6 @@ class HomeFragment : Fragment() {
         }
 
         homeViewModel.getPoliciesFromRepo()
-
-        return binding.root
     }
 
     override fun onDestroyView() {
