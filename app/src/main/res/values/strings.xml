@@ -8,4 +8,8 @@
     <string name="policy_type_textview">Policy Type</string>
     <string name="policy_holder_text_view">First Middle Last</string>
     <string name="policy_number_text_view">Policy #</string>
+    <string name="edit_button_text">Edit</string>
+    <string name="carrier_name">carrier name</string>
+    <string name="policy_type_label">Policy Type:</string>
+    <string name="spinner_content">Drop down menu for changing policy type</string>
 </resources>
