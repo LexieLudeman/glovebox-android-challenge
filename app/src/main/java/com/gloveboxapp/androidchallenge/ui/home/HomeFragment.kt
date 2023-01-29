@@ -6,6 +6,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,9 +24,7 @@ class HomeFragment : Fragment() {
     private lateinit var homeAdapter: HomeOuterAdapter
     private lateinit var outerRecyclerView: RecyclerView
 
-    private val homeViewModel: HomeViewModel by lazy {
-        ViewModelProvider(this)[HomeViewModel::class.java]
-    }
+    private val homeViewModel by viewModels<HomeViewModel>()
 
     private var _binding: FragmentHomeBinding? = null
 

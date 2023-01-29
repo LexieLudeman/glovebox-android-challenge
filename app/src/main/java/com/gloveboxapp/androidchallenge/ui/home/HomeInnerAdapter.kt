@@ -37,7 +37,6 @@ class HomeInnerAdapter(
             policyHolderText.text = nameBuilder.toString()
 
             editButton.setOnClickListener {
-                Log.d("Buttons", policy.policyNumber + " pressed")
                 val editPolicy = HomeFragmentDirections.actionNavigationHomeToEditPolicyFragment(policy)
                 it.findNavController().navigate(editPolicy)
             }

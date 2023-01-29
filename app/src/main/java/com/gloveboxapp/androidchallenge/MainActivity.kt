@@ -8,7 +8,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.gloveboxapp.androidchallenge.databinding.ActivityMainBinding
-import com.gloveboxapp.androidchallenge.repository.GloveBoxRepositoryImpl
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

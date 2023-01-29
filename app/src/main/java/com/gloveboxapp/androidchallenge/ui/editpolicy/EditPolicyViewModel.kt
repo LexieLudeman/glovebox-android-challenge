@@ -26,7 +26,6 @@ class EditPolicyViewModel @Inject constructor(
         }
     }
 
-
     fun updateStorePolicies(policies: ArrayList<Policy>) = viewModelScope.launch {
         store.update { applicationState ->
             return@update applicationState.copy(

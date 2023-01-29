@@ -56,7 +56,6 @@ class HomeOuterAdapter(
 
     fun updatePolicies(policies: List<Policy>) {
         createPolicyMap(policies)
-//        notifyDataSetChanged()
     }
 
 }

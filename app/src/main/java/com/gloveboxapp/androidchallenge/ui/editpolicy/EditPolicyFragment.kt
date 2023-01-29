@@ -1,43 +1,43 @@
 package com.gloveboxapp.androidchallenge.ui.editpolicy
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import android.widget.SpinnerAdapter
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import com.gloveboxapp.androidchallenge.R
+import com.gloveboxapp.androidchallenge.data.Policy
 import com.gloveboxapp.androidchallenge.data.PolicyType
 import com.gloveboxapp.androidchallenge.databinding.FragmentEditPolicyBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 
+
 @AndroidEntryPoint
 class EditPolicyFragment: Fragment() {
 
-    private val editPolicyViewModel: EditPolicyViewModel by lazy {
-        ViewModelProvider(this)[EditPolicyViewModel::class.java]
-    }
+    private val editPolicyViewModel by viewModels<EditPolicyViewModel>()
 
-    private lateinit var typeSpinner: Spinner
     private var currentPolicyType: PolicyType = PolicyType()
-    private var selectedPolicyType: PolicyType = PolicyType()
 
     private lateinit var carrierName: TextView
     private lateinit var agencyName: TextView
     private lateinit var policyHolderName: TextView
     private lateinit var policyNumber: TextView
+    private lateinit var typeSpinner: Spinner
 
     private var policyTypeMap: HashMap<String, PolicyType> = HashMap()
     private var policyTypeList: List<PolicyType> = emptyList()
+    private var policyList: List<Policy> = emptyList()
     private var policyTypeNames: ArrayList<String> = ArrayList()
 
     private var _binding: FragmentEditPolicyBinding? = null
@@ -49,7 +49,7 @@ class EditPolicyFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentEditPolicyBinding.inflate(inflater, container, false)
 
         return binding.root
@@ -67,6 +67,12 @@ class EditPolicyFragment: Fragment() {
         policyHolderName = view.findViewById(R.id.policy_holder)
         policyNumber = view.findViewById(R.id.policy_number)
         typeSpinner = view.findViewById(R.id.policy_type_spinner)
+
+        var selectedPolicyType: String
+        var currentPolicyNumber = ""
+        var actionBar = (activity as AppCompatActivity?)!!.supportActionBar
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+
 
         val args = arguments?.let { EditPolicyFragmentArgs.fromBundle(it) }
 
@@ -86,8 +92,8 @@ class EditPolicyFragment: Fragment() {
             policyHolderName.text = nameBuilder.toString()
 
             currentPolicyType = args.currentPolicy.type
-            selectedPolicyType = currentPolicyType
-
+            selectedPolicyType = currentPolicyType.name.toString()
+            currentPolicyNumber = args.currentPolicy.policyNumber
         }
 
         editPolicyViewModel.store.stateFlow.map{
@@ -97,7 +103,22 @@ class EditPolicyFragment: Fragment() {
             fillTypeSpinner()
         }
         editPolicyViewModel.getTypesFromRepo()
-        Log.d("Data", policyTypeList.toString())
+
+        policyList = editPolicyViewModel.store.stateFlow.value.policies
+
+
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    selectedPolicyType = typeSpinner.selectedItem.toString()
+                    updatePolicyList(currentPolicyNumber, selectedPolicyType)
+                    if (isEnabled) {
+                        isEnabled = false
+                        requireActivity().onBackPressed()
+                    }
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
     }
 
@@ -108,10 +129,10 @@ class EditPolicyFragment: Fragment() {
         }
         policyTypeNames.sort()
 
-        var adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, policyTypeNames)
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, policyTypeNames)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
-        var currentTypeName = policyTypeNames.indexOf(currentPolicyType.name)
+        val currentTypeName = policyTypeNames.indexOf(currentPolicyType.name)
         with(typeSpinner) {
             setAdapter(adapter)
             setSelection(currentTypeName, false)
@@ -119,13 +140,18 @@ class EditPolicyFragment: Fragment() {
         }
     }
 
+    fun updatePolicyList(policyNumber : String, policyType: String) {
+        val newPolicyList = ArrayList<Policy>()
+        var currentPolicy: Policy
 
-    fun readPoliciesFromStore(){}
+        for (p in policyList) {
+            if (p.policyNumber == policyNumber) {
+                currentPolicy = p
+                currentPolicy.type = policyTypeMap.getOrDefault(policyType, currentPolicyType)
+                newPolicyList.add(p)
+            } else newPolicyList.add(p)
+        }
 
-    fun readPolicyTypesFromStore(){}
-
-    fun writeChangesToStore(){
-
+        editPolicyViewModel.updateStorePolicies(newPolicyList)
     }
-
 }
