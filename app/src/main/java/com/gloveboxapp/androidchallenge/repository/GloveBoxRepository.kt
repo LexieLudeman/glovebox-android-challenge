@@ -16,16 +16,17 @@ interface GloveBoxRepository {
     val policies: ArrayList<Policy>
     val gson: Gson
 
-    // Function to parse policies.json
     fun getPolicies()
 
-    // Function to parse policy_types.json
     fun getPolicyTypes()
 
-    fun getJsonString(fileName: String) : String?
+    fun getJsonString(fileName: String): String?
 
 }
 
+/*
+    Singleton class to get the policies and policyTypes from the json files and cache them
+ */
 @Singleton
 class GloveBoxRepositoryImpl @Inject constructor(
     @ApplicationContext private val context: Context
@@ -39,26 +40,28 @@ class GloveBoxRepositoryImpl @Inject constructor(
         getPolicyTypes()
     }
 
+    // Method to read policies.json and fill the policies array
     override fun getPolicies() {
         val policiesString = getJsonString("policies.json")
 
         if (!policiesString.isNullOrEmpty()) {
-            val policyListType = object: TypeToken<List<Policy>>(){}.type
+            val policyListType = object : TypeToken<List<Policy>>() {}.type
             policies = gson.fromJson(policiesString, policyListType)
         }
 
     }
 
+    // Method to read policy_types.json and fill the policyType array
     override fun getPolicyTypes() {
         val policyTypeString = getJsonString("policy_types.json")
 
         if (!policyTypeString.isNullOrEmpty()) {
-            val listPolicyType = object : TypeToken<List<PolicyType>>(){}.type
+            val listPolicyType = object : TypeToken<List<PolicyType>>() {}.type
             policyTypes = gson.fromJson(policyTypeString, listPolicyType)
         }
     }
 
-
+    // Method to read a json and return a string for conversion
     override fun getJsonString(fileName: String): String? {
         val jsonString: String
         try {

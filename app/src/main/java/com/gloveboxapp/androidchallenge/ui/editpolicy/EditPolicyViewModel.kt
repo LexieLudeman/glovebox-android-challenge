@@ -14,8 +14,12 @@ import javax.inject.Inject
 class EditPolicyViewModel @Inject constructor(
     private val repository: GloveBoxRepositoryImpl,
     val store: Store<ApplicationState>
-): ViewModel() {
+) : ViewModel() {
 
+    /*
+        Method that checks to see if the store has a policyType list in it and if not
+        will pull the policyTypes from the repository
+    */
     fun getTypesFromRepo() = viewModelScope.launch {
         if (store.read { it.policyTypes }.isNotEmpty()) return@launch
         val policyTypes = repository.policyTypes
@@ -26,6 +30,9 @@ class EditPolicyViewModel @Inject constructor(
         }
     }
 
+    /*
+        Method that replaces the policy list in the store with an updated version
+    */
     fun updateStorePolicies(policies: ArrayList<Policy>) = viewModelScope.launch {
         store.update { applicationState ->
             return@update applicationState.copy(

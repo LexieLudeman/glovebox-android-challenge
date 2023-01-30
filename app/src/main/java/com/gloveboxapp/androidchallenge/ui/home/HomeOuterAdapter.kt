@@ -10,10 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gloveboxapp.androidchallenge.R
 import com.gloveboxapp.androidchallenge.data.Policy
 
+// Recyclerview Adapter for the outer recyclerview found in fragment_home.xml
 class HomeOuterAdapter(
     private val context: Context,
     policyList: List<Policy>
-) : RecyclerView.Adapter<HomeOuterAdapter.HomeOuterViewHolder>(){
+) : RecyclerView.Adapter<HomeOuterAdapter.HomeOuterViewHolder>() {
 
     private lateinit var innerAdapter: HomeInnerAdapter
     private var policiesMap: HashMap<String, List<Policy>> = HashMap()
@@ -21,14 +22,18 @@ class HomeOuterAdapter(
     init {
         createPolicyMap(policyList)
     }
-    private fun createPolicyMap(list: List<Policy>){
+
+    // Method to fill the policiesMap variable
+    private fun createPolicyMap(list: List<Policy>) {
         for (p in list) {
             var carrierPolicyList = policiesMap.getOrDefault(p.carrierID, emptyList())
-            carrierPolicyList+=p
+            carrierPolicyList += p
             policiesMap[p.carrierID] = carrierPolicyList
         }
     }
-    inner class HomeOuterViewHolder(view: View) : RecyclerView.ViewHolder(view){
+
+    // Inner class for the recyclerview and textview in fragment_home.xml
+    inner class HomeOuterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val carrierId: TextView = view.findViewById(R.id.carrierId)
         val innerRecyclerView: RecyclerView = view.findViewById(R.id.policiesRecyclerView)
     }
@@ -42,6 +47,10 @@ class HomeOuterAdapter(
 
     override fun getItemCount() = policiesMap.size
 
+    /*
+        Method that takes each key-value pair from the map and passes the value into
+        the HomeInnerAdapter to form the nested recyclerview
+    */
     override fun onBindViewHolder(holder: HomeOuterViewHolder, position: Int) {
         val currentCarrier = policiesMap.keys.elementAt(position)
         val policiesList = policiesMap[currentCarrier]
@@ -49,7 +58,8 @@ class HomeOuterAdapter(
 
         if (policiesList != null) {
             innerAdapter = HomeInnerAdapter(policiesList)
-            holder.innerRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            holder.innerRecyclerView.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             holder.innerRecyclerView.adapter = innerAdapter
         }
     }
@@ -57,5 +67,4 @@ class HomeOuterAdapter(
     fun updatePolicies(policies: List<Policy>) {
         createPolicyMap(policies)
     }
-
 }

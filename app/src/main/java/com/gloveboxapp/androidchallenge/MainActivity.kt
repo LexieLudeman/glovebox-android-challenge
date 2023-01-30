@@ -1,6 +1,7 @@
 package com.gloveboxapp.androidchallenge
 
 import android.os.Bundle
+import android.view.MenuItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -33,5 +34,18 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
+
+    // Method that allows the up button in non-top fragments to work
+    override fun onSupportNavigateUp() =
+        findNavController(R.id.nav_host_fragment_activity_main).navigateUp()
+
+    // Method that allows extra methods to be called during the up button navigation
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            onBackPressedDispatcher.onBackPressed()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

@@ -1,6 +1,5 @@
 package com.gloveboxapp.androidchallenge.ui.home
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gloveboxapp.androidchallenge.R
 import com.gloveboxapp.androidchallenge.data.Policy
 
+// RecyclerView Adapter for recyclerview nested inside HomeOuterAdapter
 class HomeInnerAdapter(
     private var policiesList: List<Policy>
-) : RecyclerView.Adapter<HomeInnerAdapter.HomeInnerViewHolder>(){
+) : RecyclerView.Adapter<HomeInnerAdapter.HomeInnerViewHolder>() {
 
     inner class HomeInnerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val policyTypeText: TextView = view.findViewById(R.id.policyTypeText)
@@ -21,8 +21,13 @@ class HomeInnerAdapter(
         private val policyNumberText: TextView = view.findViewById(R.id.policyNumberText)
         private val editButton: Button = view.findViewById(R.id.editButton)
 
+        /*
+            Method to bind each of the inner recyclerview items to the correct policy and shorten
+            automotive to just auto, for simplicity
+        */
         fun bind(policy: Policy) {
-            if (policy.type.id == "auto") policyTypeText.text = "Auto"
+            if (policy.type.id == "auto") policyTypeText.text =
+                this.itemView.context.getString(R.string.auto_policy_label)
             else policyTypeText.text = policy.type.name
             policyNumberText.text = policy.policyNumber
 
@@ -37,7 +42,8 @@ class HomeInnerAdapter(
             policyHolderText.text = nameBuilder.toString()
 
             editButton.setOnClickListener {
-                val editPolicy = HomeFragmentDirections.actionNavigationHomeToEditPolicyFragment(policy)
+                val editPolicy =
+                    HomeFragmentDirections.actionNavigationHomeToEditPolicyFragment(policy)
                 it.findNavController().navigate(editPolicy)
             }
         }

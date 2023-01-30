@@ -2,18 +2,15 @@ package com.gloveboxapp.androidchallenge.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gloveboxapp.androidchallenge.R
 import com.gloveboxapp.androidchallenge.databinding.FragmentHomeBinding
-import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
@@ -51,11 +48,13 @@ class HomeFragment : Fragment() {
 
         if (_binding != null) {
             outerRecyclerView = _binding!!.root.findViewById(R.id.home_rv)
-            outerRecyclerView.layoutManager = LinearLayoutManager (this.context)
+            outerRecyclerView.layoutManager = LinearLayoutManager(this.context)
             outerRecyclerView.adapter = homeAdapter
         }
 
-        homeViewModel.store.stateFlow.map{
+        // Acquiring the list of policies and updating them
+
+        homeViewModel.store.stateFlow.map {
             it.policies
         }.distinctUntilChanged().asLiveData().observe(viewLifecycleOwner) { policies ->
             homeAdapter.updatePolicies(policies = policies)
