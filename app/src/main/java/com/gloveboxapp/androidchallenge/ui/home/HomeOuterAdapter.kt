@@ -26,7 +26,7 @@ class HomeOuterAdapter(
     // Method to fill the policiesMap variable
     private fun createPolicyMap(list: List<Policy>) {
         for (p in list) {
-            var carrierPolicyList = policiesMap.getOrDefault(p.carrierID, emptyList())
+            val carrierPolicyList = policiesMap.getOrDefault(p.carrierID, emptyList()).toMutableList()
             carrierPolicyList += p
             policiesMap[p.carrierID] = carrierPolicyList
         }

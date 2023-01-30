@@ -15,4 +15,5 @@
     <string name="auto_policy_label">Auto</string>
     <string name="your_carriers">Your Carriers</string>
     <string name="account_policy_holders">Account Policy Holders</string>
+    <string name="your_policies">Your Policies</string>
 </resources>
