@@ -3,19 +3,14 @@
     <string name="title_home">Home</string>
     <string name="title_carriers">Carriers</string>
     <string name="title_account">Account</string>
-    <string name="agency_text_view">Agency</string>
+    <string name="title_edit_policy">Edit Policy</string>
     <string name="carrier_id_text_view">Carrier ID</string>
     <string name="policy_type_textview">Policy Type</string>
     <string name="policy_holder_text_view">First Middle Last</string>
     <string name="policy_number_text_view">Policy #</string>
     <string name="edit_button_text">Edit</string>
     <string name="carrier_name">carrier name</string>
-    <string name="policy_type_label">Policy Type:</string>
     <string name="spinner_content">Drop down menu for changing policy type</string>
-    <string name="agency_label">Agency:</string>
     <string name="agency_text">Agency</string>
-    <string name="policy_holder_label">Policy Holder:</string>
-    <string name="policy_number_label">Policy:</string>
-    <string name="carrier_label">Carrier:</string>
     <string name="auto_policy_label">Auto</string>
 </resources>
