@@ -13,4 +13,6 @@
     <string name="spinner_content">Drop down menu for changing policy type</string>
     <string name="agency_text">Agency</string>
     <string name="auto_policy_label">Auto</string>
+    <string name="your_carriers">Your Carriers</string>
+    <string name="account_policy_holders">Account Policy Holders</string>
 </resources>
